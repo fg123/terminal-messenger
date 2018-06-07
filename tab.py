@@ -125,6 +125,7 @@ class ThreadTab(Tab):
         self.title = thread.name
         self.thread_messages = []
         self.has_unread = False
+        self.has_added = set()
         threading.Thread(target=self.load_thread_messages).start()
 
     def load_thread_messages(self):
@@ -135,8 +136,10 @@ class ThreadTab(Tab):
             self.push_message(self.client.thread_message_to_string(message))
 
     def on_incoming_message(self, message):
-        self.push_message(self.client.thread_message_to_string(message))
-        self.has_unread = True
+        if message.uid not in self.has_added:
+            self.has_added.add(message.uid)
+            self.push_message(self.client.thread_message_to_string(message))
+            self.has_unread = True
 
     def mark_seen(self):
         Tab.mark_seen(self)
