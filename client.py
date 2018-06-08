@@ -98,6 +98,7 @@ class Client(object):
         self.reset_ui()
         while not self.quit:
             self.update_tabs()
+            self.update_command()
             if self.has_update:
                 self.update_chat_window()
                 self.has_update = False
@@ -126,8 +127,6 @@ class Client(object):
                 curr_tab = self.tabs[self.current_tab]
                 self.set_current_command_buffer(buf + chr(c))
                 curr_tab.mark_seen()
-            self.update_command()
-            pass
 
         if self.logout:
             self.fb.logout()
