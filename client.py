@@ -32,7 +32,7 @@ class Client(object):
                 email = input('Email: ')
                 password = getpass.getpass('Password: ')
                 try:
-                    self.fb = ListeningClient(email, password)
+                    self.fb = ListeningClient(email, password, session_cookies=None)
                 except fbchat.models.FBchatException:
                     print('Failed, please try again.')
                     self.fb = None
