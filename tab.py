@@ -81,7 +81,11 @@ class MainTab(Tab):
 
         for i, thread in enumerate(self.threads):
             flag = curses.A_BOLD if thread.is_unread else curses.A_NORMAL
-            self.messages.append(('[' + str(i) + '] ' + thread.thread.name,
+            if thread.thread.name is not None:
+                name = thread.thread.name
+            else:
+                name = "<No Name>"
+            self.messages.append(('[' + str(i) + '] ' + name,
                                   flag))
         self.client.has_update = True
 
